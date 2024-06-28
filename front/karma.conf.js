@@ -29,13 +29,9 @@ module.exports = function (config) {
       subdir: '.',
       reporters: [
         { type: 'html' },
-        { type: 'text-summary' }
+        { type: 'text-summary' },
+        { type: 'json-summary'}
       ]
-    },
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../../coverage'),
-      reports: ['html', 'lcovonly', 'text-summary', 'json-summary'],
-      fixWebpackSourcePaths: true
     },
     reporters: ['progress', 'kjhtml'],
 
