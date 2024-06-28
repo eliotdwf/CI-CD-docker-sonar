@@ -1,3 +1,6 @@
+### Back-end Coverage
+![Back-end Coverage](./.github/badges/back-coverage-badge.svg)
+
 # BobApp
 
 Clone project:
