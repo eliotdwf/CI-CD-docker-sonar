@@ -43,6 +43,7 @@ jobs:
     - name: Badge with front coverage
       uses:  demyanets/angular-coverage-badges-action@v1
       with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         coverage-summary-path: front/coverage/bobapp/coverage-summary.json
         protected-branches: '["master"]'
         badge-directory: .github/badges
