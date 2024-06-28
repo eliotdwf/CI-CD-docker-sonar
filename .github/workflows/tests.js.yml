@@ -41,17 +41,10 @@ jobs:
         path: front/coverage
 
     - name: Badge with front coverage
-      uses: irongut/CodeCoverageSummary@v1.3.0
+      uses:  demyanets/angular-coverage-badges-action@v1
       with:
-        filename: front/coverage/bobapp/index.html
-        badge: true
-        fail_below_min: true
-        format: markdown
-        hide_branch_rate: false
-        hide_complexity: true
-        indicators: true
-        output: both
-        thresholds: '60 80'
+        coverage-summary-path: coverage/stslib/coverage-summary.json
+        protected-branches: '["master"]'
 
 
   test-back:
@@ -81,14 +74,8 @@ jobs:
           path: back/target/site/jacoco/
 
       - name: Badge with back coverage
-        uses: irongut/CodeCoverageSummary@v1.3.0
+        uses: cicirello/jacoco-badge-generator@v2
         with:
-          filename: back/target/site/jacoco/jacoco.xml
-          badge: true
-          fail_below_min: true
-          format: markdown
-          hide_branch_rate: false
-          hide_complexity: true
-          indicators: true
-          output: both
-          thresholds: '60 80'     
+          jacoco-csv-file: target/site/jacoco/jacoco.csv
+          badges-directory: .github/badges
+          generate-coverage-badge: true
