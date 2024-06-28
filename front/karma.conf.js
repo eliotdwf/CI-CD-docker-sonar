@@ -39,13 +39,12 @@ module.exports = function (config) {
       outputFile: 'test-results.xml', // nom du fichier de résultats des tests
       useBrowserName: false // désactive l'ajout du nom du navigateur au fichier de résultats
     },
-    
+
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
-    flags: ['--headless', '--no-sandbox', '--disable-gpu'],
     singleRun: false,
     restartOnFileChange: true
   });
