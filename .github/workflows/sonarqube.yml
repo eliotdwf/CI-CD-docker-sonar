@@ -22,7 +22,8 @@ jobs:
         distribution: 'adopt'
 
     - name: Build with Maven
-      run: mvn clean install -DskipTests
+      run: cd back && mvn clean install -DskipTests
+      
 
     - name: SonarCloud Scan for Java
       uses: sonarsource/sonarcloud-github-action@v2.3.0
