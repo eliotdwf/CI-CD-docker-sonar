@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     defaults:
        run:
@@ -30,3 +30,12 @@ jobs:
         cache-dependency-path: './front/package-lock.json'
     - run: npm ci
     - run: npm run test:prod
+
+    - name: Test Report
+      uses: phoenix-actions/test-reporting@v8
+      id: test-report
+      if: success() || failure()
+      with:
+        name: JEST Tests
+        path: ./front/jest-report.xml
+        reporter: jest-junit
