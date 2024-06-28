@@ -40,6 +40,9 @@ jobs:
         name: Front-report
         path: front/coverage
 
+    - name: Move to root directory
+      run: cd ${{ github.workspace }}
+
     - name: Badge with front coverage
       uses:  demyanets/angular-coverage-badges-action@v1
       with:
@@ -47,16 +50,6 @@ jobs:
         coverage-summary-path: front/coverage/bobapp/coverage-summary.json
         protected-branches: '["master"]'
         badges-directory: ./badges/bobapp
-
-    - name: Commit and push badges
-      run: |
-        git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
-        git add ./badges/bobapp
-        git commit -m "Update front-end coverage badges"
-        git push origin main
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
   test-back:
@@ -85,6 +78,9 @@ jobs:
           name: Back-report
           path: back/target/site/jacoco/
 
+      - name: Move to root directory
+        run: cd ${{ github.workspace }}
+
       - name: Badge with back coverage
         uses: cicirello/jacoco-badge-generator@v2
         with:
@@ -92,13 +88,3 @@ jobs:
           badges-directory: ./badges/bobapp
           generate-coverage-badge: true
           coverage-badge-filename: backendBadge.svg
-
-      - name: Commit and push badges
-        run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git add ./badges/bobapp
-          git commit -m "Update back-end coverage badges"
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
