@@ -49,13 +49,13 @@ jobs:
         badges-directory: ./badges/bobapp
 
     - name: Commit and push badges
-        run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git add ./badges/bobapp
-          git commit -m "Update front-end coverage badges"
-          git push origin main
-        env:
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add ./badges/bobapp
+        git commit -m "Update front-end coverage badges"
+        git push origin main
+      env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
