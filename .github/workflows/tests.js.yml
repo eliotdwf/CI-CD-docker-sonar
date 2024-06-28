@@ -28,18 +28,15 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: './front/package-lock.json'
+        
     - run: npm ci
-    - run: npm run test:prod
 
-    - name: Test Report
-      uses: phoenix-actions/test-reporting@v8
-      id: test-report
-      if: success() || failure()
+    - name: run test and generate code coverage
+    - run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+
+    - name: report 
+      uses: actions/upload-artifact@v3
       with:
-        name: Karma Tests
-        path: ./front/test-results/test-results.xml
-        reporter: jest-junit
-
-    - name: Read output variables
-      run: |
-        echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"     
+        name: Karma-report
+        path: front/coverage
+    
