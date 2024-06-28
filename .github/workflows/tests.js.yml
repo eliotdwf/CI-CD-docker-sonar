@@ -45,6 +45,7 @@ jobs:
       with:
         coverage-summary-path: front/coverage/bobapp/coverage-summary.json
         protected-branches: '["master"]'
+        badge-directory: .github/badges
 
 
   test-back:
