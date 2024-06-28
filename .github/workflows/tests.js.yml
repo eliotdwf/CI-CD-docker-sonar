@@ -12,9 +12,6 @@ on:
 jobs:
   test-front:
     runs-on: ubuntu-latest
-    defaults:
-       run:
-         working-directory: ./front/
 
     strategy:
       matrix:
@@ -27,21 +24,20 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: './front/package-lock.json'
+        cache-dependency-path: './front/package-lock.json'      
         
     - run: npm ci
+      working-directory: ./front/
 
     - name: run test and generate code coverage
       run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+      working-directory: ./front/
 
     - name: Generate front report 
       uses: actions/upload-artifact@v3
       with:
         name: Front-report
         path: front/coverage
-
-    - name: Move to root directory
-      run: cd ${{ github.workspace }}
 
     - name: Badge with front coverage
       uses:  demyanets/angular-coverage-badges-action@v1
@@ -64,10 +60,7 @@ jobs:
 
   test-back:
     runs-on: ubuntu-latest
-    defaults:
-       run:
-         working-directory: ./back/
-
+    
     steps:
       - uses: actions/checkout@v4
 
@@ -80,16 +73,14 @@ jobs:
       - name: Build and test with Maven
         run: |
           mvn -B package --file pom.xml
-          mvn -B test --file pom.xml    
+          mvn -B test --file pom.xml   
+        working-directory: ./back/
 
       - name: Generate back report
         uses: actions/upload-artifact@v3
         with:
           name: Back-report
           path: back/target/site/jacoco/
-
-      - name: Move to root directory
-        run: cd ${{ github.workspace }}
 
       - name: Badge with back coverage
         uses: cicirello/jacoco-badge-generator@v2
