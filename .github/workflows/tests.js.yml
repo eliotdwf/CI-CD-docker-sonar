@@ -43,7 +43,7 @@ jobs:
     - name: Badge with front coverage
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        filename: front/coverage/**/*.xml
+        filename: front/coverage/bobapp/index.html
         badge: true
         fail_below_min: true
         format: markdown
@@ -83,7 +83,7 @@ jobs:
       - name: Badge with back coverage
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: back/target/site/jacoco/*.xml
+          filename: back/target/site/jacoco/jacoco.xml
           badge: true
           fail_below_min: true
           format: markdown
