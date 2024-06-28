@@ -21,30 +21,21 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: Build with Maven
+    - name: Build backend with Maven
       run: cd back && mvn clean install -DskipTests
-      
-
-    - name: SonarCloud Scan for Java
-      uses: sonarsource/sonarcloud-github-action@v2.3.0
-      with:
-        projectBaseDir: back
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
         
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 14.x
 
-    - name: Install Dependencies
+    - name: Install frontend dependencies
       run: cd front && npm install
 
-    - name: Build
+    - name: Build frontend
       run: cd front && npm run build
 
-    - name: SonarCloud Scan for Angular
+    - name: SonarCloud Scan 
       uses: sonarsource/sonarcloud-github-action@v2.3.0
       with:
         projectBaseDir: front
