@@ -1,4 +1,5 @@
 ![Back-end Coverage](./.github/badges/backendBadge.svg.svg)
+![Front Coverage](.github/badges/coverage.svg)
 
 # BobApp
 
