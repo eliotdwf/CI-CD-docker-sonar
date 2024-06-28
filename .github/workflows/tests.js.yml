@@ -36,6 +36,10 @@ jobs:
       id: test-report
       if: success() || failure()
       with:
-        name: JEST Tests
-        path: ./front/jest-report.xml
-        reporter: jest-junit
+        name: Karma Tests
+        path: ./front/test-results/test-results.xml
+        reporter: junit
+
+    - name: Read output variables
+      run: |
+        echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"     
