@@ -32,7 +32,14 @@ module.exports = function (config) {
         { type: 'text-summary' }
       ]
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'junit'],
+
+    junitReporter: {
+      outputDir: 'test-results', // répertoire où les résultats des tests seront sauvegardés
+      outputFile: 'test-results.xml', // nom du fichier de résultats des tests
+      useBrowserName: false // désactive l'ajout du nom du navigateur au fichier de résultats
+    },
+    
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
