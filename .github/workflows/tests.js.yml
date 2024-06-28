@@ -37,7 +37,7 @@ jobs:
     - name: report 
       uses: actions/upload-artifact@v3
       with:
-        name: Karma-report
+        name: Front-report
         path: front/coverage
 
 
@@ -60,3 +60,9 @@ jobs:
         run: |
           mvn -B package --file pom.xml
           mvn -B test --file pom.xml    
+
+      - name: report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Back-report
+          path: back/target/site/jacoco/
