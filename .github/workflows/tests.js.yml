@@ -51,6 +51,16 @@ jobs:
         protected-branches: '["master"]'
         badges-directory: badges/bobapp
 
+    - name: Commit and push badges
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add badges/bobapp
+        git commit -m "Update front-end coverage badges"
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
   test-back:
     runs-on: ubuntu-latest
@@ -88,3 +98,18 @@ jobs:
           badges-directory: badges/bobapp
           generate-coverage-badge: true
           coverage-badge-filename: backendBadge.svg
+
+      - name: Log coverage percentage
+        run: |
+          echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
+          echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
+
+      - name: Commit and push badges
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add badges/bobapp
+          git commit -m "Update back-end coverage badges"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
