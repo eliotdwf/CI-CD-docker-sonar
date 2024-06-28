@@ -38,7 +38,7 @@ jobs:
       with:
         name: Karma Tests
         path: ./front/test-results/test-results.xml
-        reporter: junit
+        reporter: jest-junit
 
     - name: Read output variables
       run: |
