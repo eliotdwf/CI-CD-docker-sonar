@@ -32,7 +32,7 @@ jobs:
     - run: npm ci
 
     - name: run test and generate code coverage
-    - run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+      run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
     - name: report 
       uses: actions/upload-artifact@v3
