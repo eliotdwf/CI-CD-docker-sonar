@@ -23,6 +23,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Install dependencies
+      run: sudo apt-get install -y libgconf-2-4 google-chrome-stable
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
