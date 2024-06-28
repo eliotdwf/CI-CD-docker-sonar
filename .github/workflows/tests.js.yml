@@ -79,3 +79,4 @@ jobs:
           jacoco-csv-file: back/target/site/jacoco/jacoco.csv
           badges-directory: .github/badges
           generate-coverage-badge: true
+          coverage-badge-filename: backendBadge.svg
