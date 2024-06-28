@@ -4,8 +4,8 @@
 name: Tests
 
 on:
-  push:
-    branches: [ "main" ]
+#  push:
+ #   branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -19,12 +19,9 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install dependencies
-      run: sudo apt-get install -y libgconf-2-4 google-chrome-stable
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -32,5 +29,4 @@ jobs:
         cache: 'npm'
         cache-dependency-path: './front/package-lock.json'
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: npm run test:prod
