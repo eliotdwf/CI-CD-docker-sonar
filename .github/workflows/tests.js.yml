@@ -52,8 +52,12 @@ jobs:
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
         git add badges/bobapp
-        git commit -m "Update front-end coverage badges"
-        git push origin main
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update front-end coverage badges"
+          git push origin main
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -100,7 +104,11 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git add badges/bobapp
-          git commit -m "Update back-end coverage badges"
-          git push origin main
+          if git diff --staged --quiet; then
+          echo "No changes to commit"
+          else
+            git commit -m "Update back-end coverage badges"
+            git push origin main
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
