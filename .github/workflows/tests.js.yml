@@ -43,7 +43,7 @@ jobs:
     - name: Badge with front coverage
       uses:  demyanets/angular-coverage-badges-action@v1
       with:
-        coverage-summary-path: coverage/stslib/coverage-summary.json
+        coverage-summary-path: coverage/coverage-summary.json
         protected-branches: '["master"]'
 
 
@@ -76,6 +76,6 @@ jobs:
       - name: Badge with back coverage
         uses: cicirello/jacoco-badge-generator@v2
         with:
-          jacoco-csv-file: target/site/jacoco/jacoco.csv
+          jacoco-csv-file: back/target/site/jacoco/jacoco.csv
           badges-directory: .github/badges
           generate-coverage-badge: true
