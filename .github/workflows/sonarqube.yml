@@ -35,6 +35,16 @@ jobs:
     - name: Build frontend
       run: cd front && npm run build
 
+    - name: Run test and generate front code coverage
+      run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+      working-directory: ./front/
+
+    - name: Run test and generate back code coverage
+      run: |
+          mvn -B package --file pom.xml
+          mvn -B test --file pom.xml   
+      working-directory: ./back/
+
     - name: SonarCloud Scan 
       uses: sonarsource/sonarcloud-github-action@v2.3.0
       env:
