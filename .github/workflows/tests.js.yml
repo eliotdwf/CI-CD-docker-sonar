@@ -40,10 +40,6 @@ jobs:
         name: Front-report
         path: front/coverage
 
-    - name: Log coverage percentage (Front-end)
-      run: |
-        cat front/coverage/bobapp/coverage-summary.json 
-
     - name: Badge with front coverage
       uses:  demyanets/angular-coverage-badges-action@v1
       with:
