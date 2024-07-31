@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  checkout-and-setup:
+  docker-connexion:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,9 +24,12 @@ jobs:
 
   build-front:
     runs-on: ubuntu-latest
-    needs: checkout-and-setup
+    needs: docker-connexion
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
     - name: Install dependencies for front-end
       run: |
         cd front
@@ -41,9 +44,12 @@ jobs:
 
   build-back:
     runs-on : ubuntu-latest
-    needs: checkout-and-setup
+    needs: docker-connexion
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
     - name: Install dependencies for back-end
       run: |
         cd back
