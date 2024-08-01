@@ -31,6 +31,14 @@ jobs:
       run: npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
       working-directory: ./front/
 
+    - name: Cache front coverage
+      uses: actions/cache@v3
+      with:
+        path: front/coverage
+        key: front-coverage-${{ github.sha }}
+        restore-keys: |
+          front-coverage-
+
     - name: Generate front report 
       uses: actions/upload-artifact@v4.3.3
       with:
@@ -77,6 +85,14 @@ jobs:
           mvn -B package --file pom.xml
           mvn -B test --file pom.xml   
         working-directory: ./back/
+
+      - name: Cache back coverage
+        uses: actions/cache@v3
+        with:
+          path: back/target/site/jacoco
+          key: back-coverage-${{ github.sha }}
+          restore-keys: |
+            back-coverage-
 
       - name: Generate back report
         uses: actions/upload-artifact@v4.3.3
