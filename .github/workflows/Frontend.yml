@@ -1,0 +1,20 @@
+name: frontend-workflow
+run-name: Started frontend workflow
+on: pull_request
+jobs:
+  testing:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install depencies
+        run: npm install
+      - name: Run unit tests
+        run: ng test
+      - name: Run end to end tests
+        run: ng e2e
