@@ -18,16 +18,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-      
+
     - name: Install Node.js dependencies
       run: npm install
       working-directory: front
-      
+
     - name: Run tests
       run: npm run test:prod
       working-directory: front
