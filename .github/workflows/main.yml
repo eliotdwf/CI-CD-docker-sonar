@@ -1,4 +1,4 @@
-name: Maven Run Tests when push to Main branch and newly created PRs
+name: Test back
 
 on:
   push:
