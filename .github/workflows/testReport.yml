@@ -1,24 +1,20 @@
+name: Build
 on:
-  pull_request:
   push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
-  build-test:
-    name: Build & Test
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2     # checkout the repo
-      - run: npm ci                   # install packages
-      - run: npm test                 # run tests (configured to use jest-junit reporter)
-
-      - name: Test Report
-        uses: phoenix-actions/test-reporting@v8
-        id: test-report               # Set ID reference for step
-        if: success() || failure()    # run this step even if previous step failed
+      - uses: actions/checkout@v3
         with:
-          name: JEST Tests            # Name of the check run which will be created
-          path: reports/jest-*.xml    # Path to test results
-          reporter: jest-junit        # Format of test results
-
-      - name: Read output variables
-        run: |
-          echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
