@@ -1,4 +1,5 @@
-name: SonarFront
+name: Frontend Code Analysis
+
 on:
   push:
     branches:
@@ -7,16 +8,30 @@ on:
     branches:
       - main
       - 'card-/**'
+
 jobs:
   sonarcloud:
-    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # Désactiver les clones superficiels pour une analyse plus pertinente
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Utiliser la version Node.js adaptée à ton projet
+      - name: Install dependencies
+        run: npm install  # ou `yarn install` si tu utilises Yarn
+      - name: Run linter (optional)
+        run: npm run lint  # ou une autre commande de linter que tu utilises, comme ESLint
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKENFRONT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Pour obtenir les informations du PR
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # Ton token SonarCloud
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=mohamedocr_ocr-front \
+            -Dsonar.organization=mohamedocr \
+            -Dsonar.sources=src \
+            -Dsonar.exclusions=**/*.spec.js,**/*.test.js,**/*.spec.ts,**/*.test.ts \
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info # Si tu as un rapport de couverture de code
