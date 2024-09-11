@@ -30,7 +30,7 @@ module.exports = function (config) {
       reporters: [
         { type: 'html' },
         { type: 'text-summary' },
-        { type: 'Icov'}
+        { type: 'lcov'}
       ]
     },
     reporters: ['progress', 'kjhtml'],
