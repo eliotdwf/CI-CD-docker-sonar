@@ -1,0 +1,6 @@
+projectKey=develop
+serverUrl=https://localhost:9000/sonar
+serverVersion=10.6.0.92116
+dashboardUrl=https://localhost:9000/sonar/dashboard?id=develop
+ceTaskId=910b81ee-01cd-44ed-834c-53f7e2e5a21b
+ceTaskUrl=https://localhost:9000/sonar/api/ce/task?id=910b81ee-01cd-44ed-834c-53f7e2e5a21b
