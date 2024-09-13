@@ -1,0 +1,110 @@
+name: BACKEND Build & test THEN Sonar THEN Docker
+
+on:
+    # Trigger the workflow on push for the main branch
+    # and pull request
+    push:
+        branches:
+            - main
+        paths: 
+            - 'back/**'
+    pull_request:
+        types: [opened, synchronize, reopened]
+        branches:
+            - main
+        paths: 
+            - 'back/**'
+jobs:
+    backend:
+        name: Build & Test Backend
+        runs-on: ubuntu-latest
+
+        defaults:
+          run:
+            working-directory: ${{ github.workspace }}/back
+        
+        steps:
+          - name: Git Checkout Backend
+            uses: actions/checkout@v2     # checkout the repo
+
+          - name: Install Backend Dependencies
+            run: mvn clean install        # install packages
+            
+          - name: Execute Backend Tests
+            run: mvn clean test
+
+          - name: Creation Backend Tests Report
+            run: mvn jacoco:report
+
+          - name: Backend Code Coverage Report
+            uses: actions/upload-artifact@v4
+            with:
+              name: Jacoco Code Coverage
+              path: ./back/target/site/jacoco/
+    backend-sonar:
+        needs: backend
+        defaults:
+          run:
+            working-directory: ${{ github.workspace }}/back
+    
+        name: SonarQube Backend
+        runs-on: self-hosted # Pour pointer sur le localhost de sonarQube
+        steps:
+          - uses: actions/checkout@v3
+            with:
+              fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          - name: Set up JDK 17
+            uses: actions/setup-java@v3
+            with:
+              java-version: 17
+              distribution: 'zulu' # Alternative distribution options are available.
+
+          - name: Install Backend Dependencies
+            run: mvn clean install        # install packages
+              
+          - name: Execute Backend Tests
+            run: mvn clean test
+
+          - name: Cache SonarCloud packages
+            uses: actions/cache@v3
+            with:
+              path: ~/.sonar/cache
+              key: ${{ runner.os }}-sonar
+              restore-keys: ${{ runner.os }}-sonar
+              
+          - name: Cache Maven packages
+            uses: actions/cache@v1
+            with:
+              path: ~/.m2
+              key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+              restore-keys: ${{ runner.os }}-m2
+          - name: Build and analyze
+            env:
+              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
+              SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+            run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+    
+    docker-backend:
+        needs: backend-sonar
+        name: Image Docker back-end
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+    
+          - name: Login to Docker Hub
+            uses: docker/login-action@v3
+            with:
+              username: ${{ secrets.DOCKER_USERNAME }}
+              password: ${{ secrets.DOCKER_PASSWORD }}
+    
+          - name: Setting up Docker Buildx
+            uses: docker/setup-buildx-action@v3
+    
+          - name: Build and push
+            uses: docker/build-push-action@v5
+            with:
+              context: ./back
+              file: ./back/Dockerfile
+              push: true
+              tags: ${{ secrets.DOCKERHUB_USERNAME }}/bobapp:latest    
