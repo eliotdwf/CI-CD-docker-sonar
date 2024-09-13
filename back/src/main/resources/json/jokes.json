@@ -199,6 +199,10 @@
         {
             "joke": "Que fait un geek quand il descend du métro ?",
             "response": "Il libère la RAM"
+        },
+        {
+            "joke": "Un jour, j'ai fait une blague sur Auchan",
+            "response": "Mais elle a pas supermarché."
         }
     ]
 }
