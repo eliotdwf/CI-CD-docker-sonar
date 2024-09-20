@@ -26,7 +26,7 @@ jobs:
         
         steps:
           - name: Git Checkout Backend
-            uses: actions/checkout@v2     # checkout the repo
+            uses: actions/checkout@v4     # checkout the repo
 
           - name: Install Backend Dependencies
             run: mvn clean install        # install packages
@@ -43,3 +43,13 @@ jobs:
               name: Jacoco Code Coverage
               path: ./back/target/site/jacoco/
     
+          - name: Commit changes
+            uses: stefanzweifel/git-auto-commit-action@v4
+            with:
+              commit_message: Automated Change
+              branch: test-result
+              commit_options: '--no-verify --signoff'
+              commit_author: Author <actions@github.com>
+              status_options: '--untracked-files=no'
+              skip_dirty_check: true
+        
