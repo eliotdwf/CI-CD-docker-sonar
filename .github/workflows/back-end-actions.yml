@@ -1,6 +1,7 @@
 name: BACKEND Build & test THEN Sonar THEN Docker
 
 on:
+    workflow_dispatch:
     # Trigger the workflow on push for the main branch
     # and pull request
     push:
