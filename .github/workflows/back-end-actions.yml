@@ -27,6 +27,8 @@ jobs:
         steps:
           - name: Git Checkout Backend
             uses: actions/checkout@v4     # checkout the repo
+            with:
+              ref: ${{ github.head_ref }}
 
           - name: Install Backend Dependencies
             run: mvn clean install        # install packages
