@@ -1,4 +1,4 @@
-name: FRONT-END Build & test THEN SonarQube THEN Docker
+name: FRONT-END Build & test
 
 on:
     push:
