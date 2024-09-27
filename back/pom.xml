@@ -54,6 +54,10 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
+						<configuration>
+							<!-- Specify the output directory for the JaCoCo report -->
+							<outputDirectory>./jacoco-report</outputDirectory>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

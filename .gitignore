@@ -7,8 +7,8 @@ node_modules/
 dist/
 coverage/
 
-!target/site
-!target/site/**
+!./back/target/site
+!./back/target/site/**
 
 ### STS ###
 .apt_generated
