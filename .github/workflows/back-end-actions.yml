@@ -52,7 +52,7 @@ jobs:
 
           - name: Add and commit the generated file
             run: |
-              git add ./back/target/site/jacoco/*
+              git add ./back/target/site/jacoco
               git commit -m "Add generated test file"
 
           - name: Push changes to the target branch
