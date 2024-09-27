@@ -52,7 +52,7 @@ jobs:
 
           - name: Add and commit the generated file
             run: |
-              git add ./back/jacoco-report
+              git add jacoco-report
               git commit -m "Add generated test file"
 
           - name: Push changes to the target branch
