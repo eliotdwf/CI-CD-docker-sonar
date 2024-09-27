@@ -8,6 +8,7 @@ dist/
 coverage/
 
 !target/site
+!target/site/**
 
 ### STS ###
 .apt_generated
