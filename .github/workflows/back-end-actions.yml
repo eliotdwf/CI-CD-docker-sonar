@@ -47,7 +47,8 @@ jobs:
     
           - name: Switch to the target branch
             run: |
-              git checkout test-result
+              git fetch origin
+              git switch -c test-result origin/test-result
 
           - name: Add and commit the generated file
             run: |
