@@ -52,7 +52,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           echo "Setting up Back-End code quality analysis"
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=LePhenix47_Lahouiti_Younes_P10_20042024
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JeanUngerer_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
       - name: Upload SonarQube Report
         uses: actions/upload-artifact@v4
         with:
