@@ -5,10 +5,14 @@ on:
     push:
         branches:
             - main
+        paths: 
+            - 'front/**'
     pull_request:
         types: [opened, synchronize, reopened]
         branches:
             - main
+        paths: 
+            - 'front/**'
 jobs:          
     frontend:
         name: Build & Test Frontend
