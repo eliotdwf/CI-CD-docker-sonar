@@ -49,7 +49,7 @@ jobs:
       - name: SonarCloud Back-End Scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.Sonar.SONAR_TOKEN }}
         run: |
           echo "Setting up Back-End code quality analysis"
           echo "$SONAR_TOKEN"
