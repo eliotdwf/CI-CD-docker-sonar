@@ -45,21 +45,15 @@ jobs:
               name: Jacoco Code Coverage
               path: ./back/jacoco-report
     
-          - name: Switch to the target branch
-            run: |
-              git fetch origin
-              git switch -c test-result origin/test-result
 
-          - name: Add and commit the generated file
-            run: |
-              git config --global user.email "jean.ungerer.nobound@gmail.com"
-              git config --global user.name "autotask"
-              git add jacoco-report
-              git commit -m "Add generated test file"
 
-          - name: Push changes to the target branch
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            run: |
-              git push origin test-result --force
+          - name: Commit changes
+            uses: stefanzweifel/git-auto-commit-action@v5
+            with:
+              commit_message: Automated Change
+              branch: test-result
+              commit_options: '--no-verify --signoff'
+              commit_author: Author <actions@github.com>
+              status_options: ''
+              skip_dirty_check: true
         
