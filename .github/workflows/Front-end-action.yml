@@ -35,7 +35,7 @@ jobs:
             run: npm run build
             
           - name: Execute Frontend Tests
-            run: npm run test
+            run: npm run test:prod
 
           - name: Frontend Code Coverage Report
             uses: actions/upload-artifact@v4
