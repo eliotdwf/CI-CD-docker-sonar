@@ -43,7 +43,7 @@ jobs:
             uses: actions/upload-artifact@v4
             with:
               name: Jacoco Code Coverage
-              path: ./back/target/site/jacoco/
+              path: ./back/jacoco-report
     
           - name: Switch to the target branch
             run: |
@@ -52,7 +52,9 @@ jobs:
 
           - name: Add and commit the generated file
             run: |
-              git add ./back/target/site/jacoco
+              git config --global user.email "jean.ungerer.nobound@gmail.com"
+              git config --global user.name "autotask"
+              git add jacoco-report
               git commit -m "Add generated test file"
 
           - name: Push changes to the target branch

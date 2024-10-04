@@ -1,5 +1,7 @@
 # BobApp
 
+[Last build test coverage](https://jeanungerer.github.io/Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD/)
+
 Clone project:
 
 > git clone XXXXX
