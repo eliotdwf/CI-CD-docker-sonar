@@ -52,7 +52,7 @@ jobs:
           - name: Switch to the target branch
             run: |
               git fetch origin
-              git checkout test-result origin/test-result
+              git checkout origin/test-result
 
           - name: Commit the generated file
             run: |
