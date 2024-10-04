@@ -44,17 +44,20 @@ jobs:
             with:
               name: Jacoco Code Coverage
               path: ./back/jacoco-report
+
+          - name: Add the generated file
+            run: |
+              git config --global user.email "jean.ungerer.nobound@gmail.com"
+              git config --global user.name "autotask"
+              git add jacoco-report
     
           - name: Switch to the target branch
             run: |
               git fetch origin
               git switch -c test-result origin/test-result
 
-          - name: Add and commit the generated file
+          - name: Commit the generated file
             run: |
-              git config --global user.email "jean.ungerer.nobound@gmail.com"
-              git config --global user.name "autotask"
-              git add jacoco-report
               git commit -m "Add generated test file"
 
           - name: Push changes to the target branch
