@@ -11,5 +11,8 @@ jobs:
     steps:
       - name: Echo Secret
         run: | 
-            echo "The secret is ${{ secrets.SONAR_TOKEN }}"
-            echo "The githubtok is ${{ secrets.GITHUB_TOKEN }}"
+            if [ "${{ secrets.SONAR_TOKEN }}" == "aaaa" ]; then
+              echo "Secret is correctly set."
+            else
+              echo "Secret is not correctly set."
+            fi
