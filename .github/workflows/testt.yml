@@ -16,3 +16,5 @@ jobs:
             else
               echo "Secret is not correctly set."
             fi
+            echo "Variable is ${{ MY_VARIABLE }}"
+
