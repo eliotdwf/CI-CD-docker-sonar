@@ -6,17 +6,8 @@ on:
     # and pull request
 
 jobs:
-  backend:
-    name: Build & Test Backend
+  echo-secret:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}/back
-    
     steps:
-      - name: testing token
-        env:
-          GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          echo "Le secret est  ${{ secrets.SONAR_TOKEN }}"
+      - name: Echo Secret
+        run: echo "The secret is ${{ secrets.SONAR_TOKEN }}"
