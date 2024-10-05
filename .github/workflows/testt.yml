@@ -11,10 +11,10 @@ jobs:
     steps:
       - name: Echo Secret
         run: | 
-            if [ "${{ secrets.SONAR_TOKEN }}" == "aaaa" ]; then
+            if [ "${{ secrets.SONAR_TOKENNNN }}" == "aaaa" ]; then
               echo "Secret is correctly set."
             else
               echo "Secret is not correctly set."
             fi
-            echo "Variable is ${{ MY_VARIABLE }}"
+            echo "Variable is ${{ vars.MY_VARIABLE }}"
 
