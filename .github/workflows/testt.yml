@@ -1,0 +1,22 @@
+name: tezstt
+
+on:
+    workflow_dispatch:
+    # Trigger the workflow on push for the main branch
+    # and pull request
+
+jobs:
+  backend:
+    name: Build & Test Backend
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/back
+    
+    steps:
+      - name: testing token
+        env:
+          GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          echo "$SONAR_TOKEN"
