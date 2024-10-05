@@ -10,4 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Secret
-        run: echo "The secret is ${{ secrets.SONAR_TOKEN }}"
+        run: | 
+            echo "The secret is ${{ secrets.SONAR_TOKEN }}"
+            echo "The githubtok is ${{ secrets.GITHUB_TOKEN }}"
