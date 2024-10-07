@@ -49,11 +49,8 @@ jobs:
       - name: SonarCloud Back-End Scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: "36176f7d28ab81eb0a32ac3efaeb1848e4f785a0"
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          echo "Setting up Back-End code quality analysis"
-          echo "$SONAR_TOKEN"
-          echo "SONAR_TOKEN"
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JeanUngerer_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
       - name: Upload SonarQube Report
         uses: actions/upload-artifact@v4
@@ -97,6 +94,6 @@ jobs:
           projectBaseDir: front # Sets the project to analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: "36176f7d28ab81eb0a32ac3efaeb1848e4f785a0"
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           run: |
             echo "Setting up Front-End code quality analysis"
