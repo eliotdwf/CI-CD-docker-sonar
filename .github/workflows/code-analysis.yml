@@ -57,6 +57,27 @@ jobs:
         with:
           name: sonarqube-report
           path: .scannerwork/report-task.txt
+          
+      - name: Add the generated file
+        run: |
+          git config --global user.email "jean.ungerer.nobound@gmail.com"
+          git config --global user.name "autotask"
+          git add .
+          
+      - name: Switch to the target branch
+        run: |
+          git fetch origin
+          git checkout origin/test-result --force
+
+      - name: Commit the generated file
+        run: |
+          git commit -m "Automated addition of generated back sonar file"
+
+      - name: Push changes to the target branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin test-result --force
 
   frontend:
     defaults:
@@ -97,3 +118,30 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           run: |
             echo "Setting up Front-End code quality analysis"
+
+      - name: Upload SonarQube Front Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonarqube-report
+          path: .scannerwork/report-task.txt
+          
+      - name: Add the generated file
+        run: |
+          git config --global user.email "jean.ungerer.nobound@gmail.com"
+          git config --global user.name "autotask"
+          git add .
+          
+      - name: Switch to the target branch
+        run: |
+          git fetch origin
+          git checkout origin/test-result --force
+
+      - name: Commit the generated file
+        run: |
+          git commit -m "Automated addition of generated front sonar file"
+
+      - name: Push changes to the target branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin test-result --force
