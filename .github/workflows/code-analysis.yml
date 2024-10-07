@@ -129,7 +129,7 @@ jobs:
         run: |
           git config --global user.email "jean.ungerer.nobound@gmail.com"
           git config --global user.name "autotask"
-          git add .
+          git add .scannerwork/
           
       - name: Switch to the target branch
         run: |
