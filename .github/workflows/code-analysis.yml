@@ -131,7 +131,7 @@ jobs:
           git config --global user.email "jean.ungerer.nobound@gmail.com"
           git config --global user.name "autotask"
           git status
-          git add .scannerwork/
+          git add scannerwork
           git status
           
       - name: Switch to the target branch
