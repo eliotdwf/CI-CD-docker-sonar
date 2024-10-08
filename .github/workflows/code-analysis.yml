@@ -62,6 +62,7 @@ jobs:
         run: |
           git config --global user.email "jean.ungerer.nobound@gmail.com"
           git config --global user.name "autotask"
+          git status
           git add .
           
       - name: Switch to the target branch
@@ -129,7 +130,9 @@ jobs:
         run: |
           git config --global user.email "jean.ungerer.nobound@gmail.com"
           git config --global user.name "autotask"
+          git status
           git add .scannerwork/
+          git status
           
       - name: Switch to the target branch
         run: |
@@ -138,6 +141,7 @@ jobs:
 
       - name: Commit the generated file
         run: |
+          git status
           git commit -m "Automated addition of generated front sonar file"
 
       - name: Push changes to the target branch
