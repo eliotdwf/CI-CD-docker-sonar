@@ -63,22 +63,20 @@ jobs:
           git config --global user.email "jean.ungerer.nobound@gmail.com"
           git config --global user.name "autotask"
           git status
-          git add .
+          git add .scannerwork/report-task.txt
           
       - name: Switch to the target branch
         run: |
           git fetch origin
           git checkout origin/test-result --force
 
-      - name: Commit the generated file
-        run: |
-          git commit -m "Automated addition of generated back sonar file"
-
-      - name: Push changes to the target branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git push origin test-result --force
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Automated Change
+          branch: test-result
+          commit_options: '--no-verify --signoff'
+          commit_author: Author <actions@github.com>
 
   frontend:
     defaults:
@@ -131,7 +129,7 @@ jobs:
           git config --global user.email "jean.ungerer.nobound@gmail.com"
           git config --global user.name "autotask"
           git status
-          git add scannerwork
+          git add .scannerwork/report-task.txt
           git status
           
       - name: Switch to the target branch
@@ -139,13 +137,10 @@ jobs:
           git fetch origin
           git checkout origin/test-result --force
 
-      - name: Commit the generated file
-        run: |
-          git status
-          git commit -m "Automated addition of generated front sonar file"
-
-      - name: Push changes to the target branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git push origin test-result --force
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Automated Change
+          branch: test-result
+          commit_options: '--no-verify --signoff'
+          commit_author: Author <actions@github.com>
