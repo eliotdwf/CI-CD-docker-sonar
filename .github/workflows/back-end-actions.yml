@@ -64,9 +64,4 @@ jobs:
               commit_options: '--no-verify --signoff'
               commit_author: Author <actions@github.com>
 
-          - name: Push changes to the target branch
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            run: |
-              git push origin test-result --force
         
