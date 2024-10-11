@@ -54,7 +54,7 @@ jobs:
           - name: Switch to the target branch
             run: |
               git fetch origin
-              git switch -c test-result origin/test-result
+              git checkout origin/test-result --force
 
           - name: Commit the generated file
             run: |
