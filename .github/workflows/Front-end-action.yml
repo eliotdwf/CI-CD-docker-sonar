@@ -54,13 +54,11 @@ jobs:
               git fetch origin
               git checkout origin/test-result --force
 
-          - name: Commit the generated file
-            run: |
-              git commit -m "Add generated test file"
-
-          - name: Push changes to the target branch
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            run: |
-              git push origin test-result --force
+          - name: Commit changes
+            uses: stefanzweifel/git-auto-commit-action@v5
+            with:
+              commit_message: Automated Change
+              branch: test-result
+              commit_options: '--no-verify --signoff'
+              commit_author: Author <actions@github.com>
               
