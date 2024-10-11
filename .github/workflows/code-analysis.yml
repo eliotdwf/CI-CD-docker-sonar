@@ -57,26 +57,6 @@ jobs:
         with:
           name: sonarqube-report
           path: .scannerwork/report-task.txt
-          
-      - name: Add the generated file
-        run: |
-          git config --global user.email "jean.ungerer.nobound@gmail.com"
-          git config --global user.name "autotask"
-          git status
-          git add .scannerwork/report-task.txt
-          
-      - name: Switch to the target branch
-        run: |
-          git fetch origin
-          git checkout origin/test-result --force
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Automated Change
-          branch: test-result
-          commit_options: '--no-verify --signoff'
-          commit_author: Author <actions@github.com>
 
   frontend:
     defaults:
@@ -123,24 +103,4 @@ jobs:
         with:
           name: sonarqube-report
           path: .scannerwork/report-task.txt
-          
-      - name: Add the generated file
-        run: |
-          git config --global user.email "jean.ungerer.nobound@gmail.com"
-          git config --global user.name "autotask"
-          git status
-          git add .scannerwork/report-task.txt
-          git status
-          
-      - name: Switch to the target branch
-        run: |
-          git fetch origin
-          git checkout origin/test-result --force
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Automated Change
-          branch: test-result
-          commit_options: '--no-verify --signoff'
-          commit_author: Author <actions@github.com>
+        
