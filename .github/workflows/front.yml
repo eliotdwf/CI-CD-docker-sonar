@@ -24,10 +24,10 @@ jobs:
 
     steps:
     - name: checkout code
-    - uses: actions/checkout@v4
+      uses: actions/checkout@v4
     
     - name: setup node.js
-    - uses: actions/setup-node@v3
+      uses: actions/setup-node@v3
       with:
         node-version: 16
 
@@ -40,7 +40,7 @@ jobs:
       run: ng test
 
     - name: upload coverage report
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: coverage-report
         path: front/coverage
