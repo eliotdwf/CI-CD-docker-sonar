@@ -7,6 +7,9 @@ node_modules/
 dist/
 coverage/
 
+!**/back/target/site
+!**/back/target/site/**
+
 ### STS ###
 .apt_generated
 .classpath

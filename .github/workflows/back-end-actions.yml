@@ -1,0 +1,67 @@
+name: BACKEND Build & test
+
+on:
+    workflow_dispatch:
+    # Trigger the workflow on push for the main branch
+    # and pull request
+    push:
+        branches:
+            - main
+        paths: 
+            - 'back/**'
+    pull_request:
+        types: [opened, synchronize, reopened]
+        branches:
+            - main
+        paths: 
+            - 'back/**'
+jobs:
+    backend:
+        name: Build & Test Backend
+        runs-on: ubuntu-latest
+
+        defaults:
+          run:
+            working-directory: ${{ github.workspace }}/back
+        
+        steps:
+          - name: Git Checkout Backend
+            uses: actions/checkout@v4     # checkout the repo
+            with:
+              ref: ${{ github.head_ref }}
+
+          - name: Install Backend Dependencies
+            run: mvn clean install        # install packages
+            
+          - name: Execute Backend Tests
+            run: mvn clean test
+
+          - name: Creation Backend Tests Report
+            run: mvn jacoco:report
+
+          - name: Backend Code Coverage Report
+            uses: actions/upload-artifact@v4
+            with:
+              name: Jacoco Code Coverage
+              path: ./back/jacoco-report
+
+          - name: Add the generated file
+            run: |
+              git config --global user.email "jean.ungerer.nobound@gmail.com"
+              git config --global user.name "autotask"
+              git add jacoco-report
+    
+          - name: Switch to the target branch
+            run: |
+              git fetch origin
+              git checkout origin/test-result --force
+
+          - name: Commit changes
+            uses: stefanzweifel/git-auto-commit-action@v5
+            with:
+              commit_message: Automated Change
+              branch: test-result
+              commit_options: '--no-verify --signoff'
+              commit_author: Author <actions@github.com>
+
+        

@@ -1,0 +1,20 @@
+name: tezstt
+
+on:
+    workflow_dispatch:
+    # Trigger the workflow on push for the main branch
+    # and pull request
+
+jobs:
+  echo-secret:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Secret
+        run: | 
+            if [ "${{ secrets.SONAR_TOKENNNN }}" == "aaaa" ]; then
+              echo "Secret is correctly set."
+            else
+              echo "Secret is not correctly set."
+            fi
+            echo "Variable is ${{ secrets.SUPER_SECRET }}"
+

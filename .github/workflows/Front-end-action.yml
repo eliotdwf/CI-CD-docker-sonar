@@ -1,0 +1,64 @@
+name: FRONT-END Build & test
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+        paths: 
+            - 'front/**'
+    pull_request:
+        types: [opened, synchronize, reopened]
+        branches:
+            - main
+        paths: 
+            - 'front/**'
+jobs:          
+    frontend:
+        name: Build & Test Frontend
+        runs-on: ubuntu-latest
+
+        defaults:
+          run:
+            working-directory: ${{ github.workspace }}/front
+        
+        steps:
+          - name: Git Checkout Front
+            uses: actions/checkout@v4
+            with:
+              ref: ${{ github.head_ref }}
+
+          - name: Install Frontend Dependencies
+            run: npm install
+
+          - name: Build Frontend
+            run: npm run build
+            
+          - name: Execute Frontend Tests
+            run: npm run test:prod
+
+          - name: Frontend Code Coverage Report
+            uses: actions/upload-artifact@v4
+            with:
+              name: Jest Code Coverage
+              path: ./front/coverage-report/bobapp
+
+          - name: Add the generated file
+            run: |
+              git config --global user.email "jean.ungerer.nobound@gmail.com"
+              git config --global user.name "autotask"
+              git add coverage-report
+              
+          - name: Switch to the target branch
+            run: |
+              git fetch origin
+              git checkout origin/test-result --force
+
+          - name: Commit changes
+            uses: stefanzweifel/git-auto-commit-action@v5
+            with:
+              commit_message: Automated Change
+              branch: test-result
+              commit_options: '--no-verify --signoff'
+              commit_author: Author <actions@github.com>
+              
