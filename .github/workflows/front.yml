@@ -1,4 +1,4 @@
-name: Front-end CI/CD with Tests, SonarCloud & Docker
+name: Front-end CI/CD with coverage report, SonarCloud analysis & Docker image
 
 on:
   push:
