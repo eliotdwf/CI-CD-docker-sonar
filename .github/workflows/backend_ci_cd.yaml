@@ -1,0 +1,51 @@
+name: Backend CI/CD
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build-and-deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up JDK 11 for Maven
+      uses: actions/setup-java@v1
+      with:
+        java-version: '11'
+    - name: Build with Maven
+      run: |
+        cd back
+        mvn -B clean package
+    - name: Run backend tests and generate coverage report
+      run: |
+        cd back
+        mvn test jacoco:report
+    - name: Set up JDK 17 for SonarCloud analysis
+      uses: actions/setup-java@v1
+      with:
+        java-version: '17'
+    - name: SonarCloud Analysis for Backend
+      run: |
+        cd back
+        mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AissiouAbdallahDevFs_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+    - name: Build and push Docker image for backend
+      uses: docker/build-push-action@v2
+      with:
+        context: ./back
+        file: ./back/Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/backend-image:latest
