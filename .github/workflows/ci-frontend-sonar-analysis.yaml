@@ -1,4 +1,4 @@
-name: Build
+name: SonarCloud Analysis - Frontend
 on:
   push:
     branches:
@@ -13,8 +13,37 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      # Étape 2: Configuration de Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16.10.0'  # Adaptez la version selon votre projet front
+      - name: Cache Node.js modules
+        uses: actions/cache@v4
+        with:
+          path: front/node_modules  # Chemin du cache des modules Node.js
+          key: ${{ runner.os }}-node-${{ hashFiles('front/package-lock.json') }}  # Clé pour identifier le cache, basée sur le hash du fichier package-lock.json
+          restore-keys: |
+            ${{ runner.os }}-node-  # Clé pour restaurer le cache
+
+      # Étape 5: Installation des dépendances
+      - name: Install dependencies
+        working-directory: front  # Spécifie le chemin du front-end
+        run: npm ci  # Installe les dépendances en utilisant npm ci
+      - name: Run tests
+        working-directory: front  # Spécifie le chemin du front-end
+        run: npm run test:prod  # Lancer les tests en mode headless
+        
+      - name: Run SonarQube Analysis for Frontend
+        working-directory: front  # Spécifie le chemin du front-end
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Jeton d'accès pour SonarCloud
+          JAVA_HOME: ${{ env.JAVA_HOME_17_X64 }}  # Chemin vers JDK 17
+        run: |
+          npx sonar-scanner \
+          -Dsonar.projectKey=eliotdwf_CI-CD-docker-sonar \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.organization=eliotdwf-dev \
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info  # Chemin vers le rapport de couverture LCOV
