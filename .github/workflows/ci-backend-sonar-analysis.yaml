@@ -39,6 +39,7 @@ jobs:
               ${{ runner.os }}-m2
 
         - name: Build and test with Maven
+          working-directory: back
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=eliotdwf_CI-CD-docker-sonar
