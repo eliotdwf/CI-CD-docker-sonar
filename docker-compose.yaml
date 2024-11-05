@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./back  # Path to the backend directory
+      dockerfile: Dockerfile  # Name of the Dockerfile in /back (can be changed if necessary)
+    container_name: bobapp-back
+    ports:
+      - "8080:8080"  # Expose backend port
+    networks:
+      - my-network
+
+  frontend:
+    build:
+      context: ./front  # Path to the frontend directory
+      dockerfile: Dockerfile  # Name of the Dockerfile in /front (can be changed if necessary)
+    container_name: bobapp-front
+    ports:
+      - "80:80"  # Expose frontend port
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
