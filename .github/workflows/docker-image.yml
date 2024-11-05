@@ -1,0 +1,37 @@
+name: Docker Image CD
+
+on:
+  push:
+    branches: [ "main" ] # Déclenche le workflow lorsqu'un commit est effectué sur la branche principale
+  workflow_dispatch: # Déclenche le workflow manuellement
+
+jobs:
+  build_and_push_images:
+    runs-on: ubuntu-latest # Utilise l'image Ubuntu la plus récente
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4 # Utilise l'action pour récupérer le code source
+
+    # Étape 4: Connexion à Docker Hub
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3 # Utilise l'action Docker pour se connecter à Docker Hub
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}  # Utilise le nom d'utilisateur Docker Hub stocké dans les secrets
+        password: ${{ secrets.DOCKER_PASSWORD }}  # Utilise le mot de passe Docker Hub stocké dans les secrets
+
+    - name: Build and Push Backend Image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./back  # Dossier backend
+        file: ./back/Dockerfile # Emplacement du Dockerfile
+        push: true  # Pousser l'image sur Docker Hub
+        tags: ${{ secrets.DOCKER_USERNAME }}/bobapp-back:latest
+
+    - name: Build and Push Frontend Image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./front  # Dossier frontend
+        file: ./front/Dockerfile
+        push: true  # Pousser l'image sur Docker Hub
+        tags: ${{ secrets.DOCKER_USERNAME }}/bobapp-front:latest
