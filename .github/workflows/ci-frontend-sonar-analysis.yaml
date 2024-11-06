@@ -13,11 +13,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      # Étape 2: Configuration de Node.js
+      
+      # Configuration de Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '16.10.0'  # Adaptez la version selon votre projet front
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+          
       - name: Cache Node.js modules
         uses: actions/cache@v4
         with:
