@@ -2,7 +2,9 @@ name: CD - Docker Build & Push Image
 
 on:
   workflow_run:
-    workflows: ["SonarCloud Analysis"]
+    workflows: 
+     - "SonarCloud Analysis - Frontend"
+     - "SonarCloud Analysis - Backend"
     types:
       - completed
   workflow_dispatch: # Déclenche le workflow manuellement
